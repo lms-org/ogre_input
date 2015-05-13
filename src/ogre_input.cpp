@@ -49,10 +49,11 @@ bool OgreInput::cycle() {
 }
 
 void OgreInput::event(const std::string &key) {
-    std::string command = config->get<std::string>(key, "");
+    std::string command = config->get<std::string>(key + ".command", "");
+    std::string content = config->get<std::string>(key + ".content", "");
 
-    if(! command.empty()) {
-        messaging()->send(command);
+    if(! command.empty() && ! content.empty()) {
+        messaging()->send(command, content);
     } else {
         logger.debug() << "Looking for " << key;
     }
