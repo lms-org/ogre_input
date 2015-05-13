@@ -12,6 +12,8 @@ public:
     bool initialize() override;
     bool cycle() override;
     bool deinitialize() override;
+private:
+    void event(const std::string &key);
 protected:
     bool keyPressed(const OIS::KeyEvent &arg) override;
     bool keyReleased(const OIS::KeyEvent &arg) override;

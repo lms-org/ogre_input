@@ -48,27 +48,37 @@ bool OgreInput::cycle() {
     return true;
 }
 
-bool OgreInput::keyPressed(const OIS::KeyEvent &arg) {
-    std::string key = "key." + keyboard->getAsString(arg.key);
+void OgreInput::event(const std::string &key) {
     std::string command = config->get<std::string>(key, "");
 
     if(! command.empty()) {
         messaging()->send(command);
     } else {
-        logger.info() << "Looking for " << key;
+        logger.debug() << "Looking for " << key;
     }
+}
+
+bool OgreInput::keyPressed(const OIS::KeyEvent &arg) {
+    event("key.down." + keyboard->getAsString(arg.key));
     return true;
 }
 
 bool OgreInput::keyReleased(const OIS::KeyEvent &arg) {
+    event("key.up." + keyboard->getAsString(arg.key));
     return true;
 }
+
 bool OgreInput::mouseMoved(const OIS::MouseEvent &arg) {
+    // TODO trigger a mouse move event
     return true;
 }
+
 bool OgreInput::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
+    event("mouse.down." + std::to_string(static_cast<int>(id)));
     return true;
 }
+
 bool OgreInput::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
+    event("mouse.up." + std::to_string(static_cast<int>(id)));
     return true;
 }
