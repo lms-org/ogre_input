@@ -70,16 +70,19 @@ bool OgreInput::keyReleased(const OIS::KeyEvent &arg) {
 }
 
 bool OgreInput::mouseMoved(const OIS::MouseEvent &arg) {
+    (void)arg;
     // TODO trigger a mouse move event
     return true;
 }
 
 bool OgreInput::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
+    (void)arg;
     event("mouse.down." + std::to_string(static_cast<int>(id)));
     return true;
 }
 
 bool OgreInput::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id) {
+    (void)arg;
     event("mouse.up." + std::to_string(static_cast<int>(id)));
     return true;
 }
