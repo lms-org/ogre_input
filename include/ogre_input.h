@@ -1,6 +1,7 @@
 #ifndef OGRE_INPUT_H
 #define OGRE_INPUT_H
 
+#include <map>
 #include "lms/module.h"
 #include "lms/datamanager.h"
 #include "ogre/window.h"
@@ -28,6 +29,8 @@ private:
     OIS::Mouse *mouse;
     OIS::Keyboard *keyboard;
 
+    typedef std::map<OIS::KeyCode, lms::extra::PrecisionTime> RepeatKeysType;
+    RepeatKeysType repeatKeys;
 };
 
 #endif /* OGRE_INPUT_H */

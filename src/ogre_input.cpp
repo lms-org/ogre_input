@@ -42,8 +42,25 @@ bool OgreInput::deinitialize() {
 }
 
 bool OgreInput::cycle() {
+    using lms::extra::PrecisionTime;
+
     mouse->capture();
     keyboard->capture();
+
+    PrecisionTime now = PrecisionTime::now();
+    PrecisionTime longPress = PrecisionTime::fromMillis(
+                config->get<int>("longPress", 500));
+
+    for(RepeatKeysType::iterator it = repeatKeys.begin();
+        it != repeatKeys.end(); ++it) {
+
+        PrecisionTime timestamp = it->second;
+        std::string key = "key.down." + keyboard->getAsString(it->first);
+
+        if(now - timestamp > longPress) {
+            event(key);
+        }
+    }
 
     return true;
 }
@@ -60,12 +77,24 @@ void OgreInput::event(const std::string &key) {
 }
 
 bool OgreInput::keyPressed(const OIS::KeyEvent &arg) {
-    event("key.down." + keyboard->getAsString(arg.key));
+    std::string key = "key.down." + keyboard->getAsString(arg.key);
+    event(key);
+
+    bool repeatEvent = config->get<bool>(key + ".repeat", false);
+
+    if(repeatEvent) {
+        repeatKeys.insert(std::make_pair(arg.key, lms::extra::PrecisionTime::now()));
+    }
+
     return true;
 }
 
 bool OgreInput::keyReleased(const OIS::KeyEvent &arg) {
-    event("key.up." + keyboard->getAsString(arg.key));
+    std::string key = "key.up." + keyboard->getAsString(arg.key);
+    event(key);
+
+    repeatKeys.erase(arg.key);
+
     return true;
 }
 
