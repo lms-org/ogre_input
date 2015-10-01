@@ -5,7 +5,7 @@
 #include "lms/module.h"
 #include "lms/datamanager.h"
 #include "ogre/window.h"
-#include "lms/type/module_config.h"
+#include "lms/module_config.h"
 #include "OIS/OIS.h"
 
 class OgreInput : public lms::Module, private OIS::MouseListener, private OIS::KeyListener {
@@ -23,7 +23,7 @@ protected:
     bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id) override;
 private:
     visual::Window *window;
-    const lms::type::ModuleConfig *config;
+    const lms::ModuleConfig *config;
 
     OIS::InputManager *inputManager;
     OIS::Mouse *mouse;
