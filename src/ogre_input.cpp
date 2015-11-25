@@ -4,10 +4,8 @@
 #include "OIS/OIS.h"
 
 bool OgreInput::initialize() {
-    config = getConfig();
-
     window = VisualManager::getInstance()
-            ->getWindow(this,config->get<std::string>("WINDOW", "WINDOW"));
+            ->getWindow(this,config().get<std::string>("WINDOW", "WINDOW"));
 
     std::string windowHandleString;
     {
@@ -49,7 +47,7 @@ bool OgreInput::cycle() {
 
     PrecisionTime now = PrecisionTime::now();
     PrecisionTime longPress = PrecisionTime::fromMillis(
-                config->get<int>("longPress", 500));
+                config().get<int>("longPress", 500));
 
     for(RepeatKeysType::iterator it = repeatKeys.begin();
         it != repeatKeys.end(); ++it) {
@@ -66,8 +64,8 @@ bool OgreInput::cycle() {
 }
 
 void OgreInput::event(const std::string &key) {
-    std::string command = config->get<std::string>(key + ".command", "");
-    std::string content = config->get<std::string>(key + ".content", "");
+    std::string command = config().get<std::string>(key + ".command", "");
+    std::string content = config().get<std::string>(key + ".content", "");
 
     if(! command.empty() && ! content.empty()) {
         messaging()->send(command, content);
@@ -80,7 +78,7 @@ bool OgreInput::keyPressed(const OIS::KeyEvent &arg) {
     std::string key = "key.down." + keyboard->getAsString(arg.key);
     event(key);
 
-    bool repeatEvent = config->get<bool>(key + ".repeat", false);
+    bool repeatEvent = config().get<bool>(key + ".repeat", false);
 
     if(repeatEvent) {
         repeatKeys.insert(std::make_pair(arg.key, lms::extra::PrecisionTime::now()));

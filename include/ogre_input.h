@@ -3,7 +3,6 @@
 
 #include <map>
 #include "lms/module.h"
-#include "lms/datamanager.h"
 #include "ogre/window.h"
 #include "lms/module_config.h"
 #include "OIS/OIS.h"
@@ -23,7 +22,6 @@ protected:
     bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id) override;
 private:
     visual::Window *window;
-    const lms::ModuleConfig *config;
 
     OIS::InputManager *inputManager;
     OIS::Mouse *mouse;
