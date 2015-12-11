@@ -2,6 +2,7 @@
 #define OGRE_INPUT_H
 
 #include <map>
+#include "lms/extra/time.h"
 #include "lms/module.h"
 #include "ogre/window.h"
 #include "lms/module_config.h"
