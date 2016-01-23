@@ -2,10 +2,10 @@
 #define OGRE_INPUT_H
 
 #include <map>
-#include "lms/extra/time.h"
+#include "lms/time.h"
 #include "lms/module.h"
 #include "ogre/window.h"
-#include "lms/module_config.h"
+#include "lms/config.h"
 #include "OIS/OIS.h"
 
 class OgreInput : public lms::Module, private OIS::MouseListener, private OIS::KeyListener {
@@ -28,7 +28,7 @@ private:
     OIS::Mouse *mouse;
     OIS::Keyboard *keyboard;
 
-    typedef std::map<OIS::KeyCode, lms::extra::PrecisionTime> RepeatKeysType;
+    typedef std::map<OIS::KeyCode, lms::Time> RepeatKeysType;
     RepeatKeysType repeatKeys;
 };
 
